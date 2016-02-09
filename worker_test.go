@@ -26,12 +26,11 @@ func TestBasic(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	codeWithSyntaxError := ` $print(hello world"); `
-	err = worker.Load("codeWithSyntaxError.js", codeWithSyntaxError)
-	if err == nil {
-		t.Fatal("Expected error")
+	codeWithUsingArrayAllocator := ` var _utf8len = new Uint8Array(256); $print(_utf8len); `
+	err = worker.Load("buffer.js", codeWithUsingArrayAllocator)
+	if err != nil {
+		t.Fatal(err)
 	}
-	//println(err.Error())
 
 	codeWithRecv := `
 		$recv(function(msg) {

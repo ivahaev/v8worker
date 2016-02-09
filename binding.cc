@@ -332,9 +332,8 @@ void v8_init() {
 
 worker* worker_new(worker_recv_cb cb, worker_recvSync_cb recvSync_cb, void* data) {
   // Create a new Isolate and make it the current one.
-  ArrayBufferAllocator allocator;
   Isolate::CreateParams create_params;
-  create_params.array_buffer_allocator = &allocator;
+  create_params.array_buffer_allocator = new ArrayBufferAllocator;
   Isolate* isolate = Isolate::New(create_params);
 
   Locker locker(isolate);
